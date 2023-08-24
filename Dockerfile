@@ -21,11 +21,11 @@ COPY entrypoint.sh /entrypoint.sh
 # Expose the port the application runs on
 EXPOSE 8000
 
-#ENTRYPOINT cd /app && \
-#	python3 manage.py makemigrations && \
-#	python3 manage.py migrate && \
-#	python3 manage.py runserver 0.0.0.0:8000
+ENTRYPOINT cd /app && \
+	python3 manage.py makemigrations && \
+	python3 manage.py migrate && \
+	python3 manage.py runserver 0.0.0.0:8000
 
-
-RUN chmod +x /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
+#
+#RUN chmod +x /entrypoint.sh
+#ENTRYPOINT ["/entrypoint.sh"]

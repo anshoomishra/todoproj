@@ -44,17 +44,6 @@ class CustomUserManager(BaseUserManager):
             raise ValueError('Superuser must have is_superuser=True.')
 
         return self._create_user(email, password, **extra_fields)
-class Organization(models.Model):
-
-    name = models.CharField(max_length=50)
-    joining_date = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        permissions = [("Can_create_organisation","Can Create Organisation"),("can_update_organisation","Can Update Organisation"),("can_delete_organisation","Can Delete Organisation"),("can_apprve_join_request","Can Approve Join Request")]
 
 class ToDoUser(AbstractBaseUser,PermissionsMixin):
     id = models.UUIDField(primary_key=True,editable=False,default=uuid.uuid4,verbose_name="ID",serialize=False)
@@ -64,11 +53,6 @@ class ToDoUser(AbstractBaseUser,PermissionsMixin):
     last_name = models.CharField(_('last name'), max_length=30, blank=True, null=True)
     nickname = models.CharField(_('nickname'), max_length=30, blank=True, null=True)
     phone_number = PhoneNumberField()
-    organization = models.ForeignKey(Organization, on_delete=models.SET_NULL,
-                                     related_name='users', null=True, blank=True)
-    admin_org = models.OneToOneField(Organization, on_delete=models.SET_NULL,
-                                     related_name='admin', null=True, blank=True)
-
     is_active = models.BooleanField(_('is active'), default=True)
     is_staff = models.BooleanField(_('staff'), default=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -87,51 +71,3 @@ class ToDoUser(AbstractBaseUser,PermissionsMixin):
             user_representation += f" {self.last_name}"
         return user_representation
 
-    def save(self, force_insert=False, force_update=False, using=None,
-             update_fields=None):
-        try:
-            # print("Hi")
-            self.clean()
-
-        except ValidationError as e:
-            raise APIException(str(e))
-        if self.admin_org:
-            if self.organization:
-                if self.organization != self.admin_org:
-                    raise APIException(str(f'User is a part of {self.organization}'))
-            else:
-                self.organization = self.admin_org
-        super(ToDoUser, self).save()
-
-class OrganizationJoinRequest(models.Model):
-
-    org = models.ForeignKey(Organization, on_delete=models.CASCADE,
-                            related_name='join_requests')
-    user = models.ForeignKey(ToDoUser, on_delete=models.CASCADE,
-                             related_name='org_requests')
-
-    class Meta:
-        unique_together = ['org', 'user']
-
-    def save(self, force_insert=False, force_update=False, using=None,
-             update_fields=None):
-        if self.user.organization == self.org:
-            raise APIException(f'User is already a member of {self.org}')
-        super().save(force_insert=False, force_update=False, using=None,
-                     update_fields=None)
-
-    def accept(self):
-        self.user.organization = self.org
-        self.user.save()
-        self.delete()
-
-class Role(models.Model):
-    id = models.UUIDField(primary_key=True,editable=False,default=uuid.uuid4)
-    name = models.CharField(max_length=100)
-    created_at = models.DateTimeField()
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        permissions = [('can_create_roles',"Can create Roles"),('can_update_roles',"Can update Roles")]

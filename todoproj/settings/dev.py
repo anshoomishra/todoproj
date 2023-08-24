@@ -12,12 +12,20 @@ ALLOWED_HOSTS = ['0.0.0.0','localhost']
 # }
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ['DASHBOARD_POSTGRES_DB'],
-        'USER': os.environ['DASHBOARD_POSTGRES_USER'],
-        'PASSWORD': os.environ['DASHBOARD_POSTGRES_PASSWORD'],
-        'HOST': os.environ['DASHBOARD_POSTGRES_IP'],
-        'PORT': os.environ['DASHBOARD_POSTGRES_PORT']
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': os.environ['DASHBOARD_POSTGRES_DB'],
+    #     'USER': os.environ['DASHBOARD_POSTGRES_USER'],
+    #     'PASSWORD': os.environ['DASHBOARD_POSTGRES_PASSWORD'],
+    #     'HOST': os.environ['DASHBOARD_POSTGRES_IP'],
+    #     'PORT': os.environ['DASHBOARD_POSTGRES_PORT']
+    # }
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "postgres",
+        "USER": "postgres",
+        "PASSWORD": "postgres",
+        "HOST": "db",  # set in docker-compose.yml
+        "PORT": 5432,  # default postgres port
     }
 }

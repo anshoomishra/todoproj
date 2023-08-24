@@ -3,6 +3,7 @@ version: '3'
 services:
   todo:
     build: .
+    container_name: todo
     image: todo:1.1
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
@@ -12,7 +13,7 @@ services:
     env_file:
       - .env
     depends_on:
-      - postgres
+      - db
 
 #  todo_db:
 #    image: postgres:latest
@@ -21,8 +22,8 @@ services:
 #    volumes:
 #      - todo_postgres_data:/var/lib/todo_postgres_data/data/
 
-  postgres:
-    container_name: postgres
+  db:
+
     image: postgres:latest
     environment:
       - POSTGRES_USER=${DASHBOARD_POSTGRES_USER}

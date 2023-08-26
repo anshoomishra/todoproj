@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <div class="container mt-4 shadow-sm">
+    <div class="row p-3">
+      <div class="col-md-6">
+        <h1 class="mb-5">
+          Welcome,
+        </h1>
+        <h3 class="mb-5">
+          Here you can manage yourself
+        </h3>
+          <p class="text-body-tertiary">
+            Welcome to TODO , the ultimate tool to conquer your tasks and boost your productivity. Simplify your life with our intuitive and powerful todo app. Whether you're a busy professional, a student juggling assignments, or simply looking to stay organized, TODO app is here to help you turn your to-dos into to-dones!
+          </p>
+
+
+      </div>
+      <div class="col-md-6">
+        <form action="" method="post">
+          {% csrf_token %}
+        {{form.as_p}}
+          <div class="row">
+            <div class="col-md-5">
+              <input type="submit" value="submit" class="btn btn-primary border-0"> <span class="text-body-tertiary">all ready registered?</span>
+            </div>
+            <div class="col-md-7">
+              <a href="{% url 'account:login' %}" class="btn btn-primary border border-0">Login</a>
+            </div>
+          </div>
+
+
+      </form>
+      </div>
+    </div>
+
+
+  </div>
+{% endblock %}

@@ -126,3 +126,6 @@ AUTH_USER_MODEL = 'account.ToDoUser'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+
+LOGOUT_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "/"

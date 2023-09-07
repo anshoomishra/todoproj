@@ -17,7 +17,7 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = ToDoUser
-        fields = ('email', 'password',)
+        fields = ( 'password',)
 
     def clean_password(self):
         return self.initial["password"]
@@ -62,7 +62,7 @@ class ToDoUserAdmin(UserAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
 
-    list_display = ('email',)
+    list_display = ('first_name','email',)
 
     fieldsets = (
         (None, {'fields': ('email', 'password', 'is_superuser', 'is_staff',

@@ -19,3 +19,9 @@ class TaskTestCase(TestCase):
     def test_active(self):
         task = Task.objects.all()
         self.assertEqual(task.count(),1)
+
+    def test_all_in_active(self):
+        task = Task.objects.all_inactive()
+        self.assertEqual(task.count(),1)
+
+

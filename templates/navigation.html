@@ -9,8 +9,14 @@
       <li class="nav-item active">
         <a class="nav-link" href="#">Home</span></a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">completed</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" type="button" id="taskMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          task
+        </a>
+        <div class="dropdown-menu" aria-labelledby="taskMenu">
+            <a class="dropdown-item" href="{% url 'todo:todo-tasks' %}">my all tasks</a>
+            <a class="dropdown-item" href="{% url 'todo:todo-tasks-completed' %}">tasks completed</a>
+        </div>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">deleted</a>

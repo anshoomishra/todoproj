@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <div class="container mt-4">
+    <div class="card" style="width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">{{object}} Due Date</h5>
+        <p class="card-text">This task is created on {{object.created_at}}</p>
+        <p class="card-text">This task is has due date on {{object.due_date}}</p>
+        <a href="{% url 'todo:todo-task-complete' object.id %}" class="btn btn-primary rounded-0">complete</a>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

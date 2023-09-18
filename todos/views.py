@@ -1,5 +1,6 @@
+from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView, DetailView, FormView
-from django.views.generic import CreateView, UpdateView, DeleteView, ListView,View
+from django.views.generic import CreateView, UpdateView, DeleteView, ListView, View
 from .permissions import IsTaskCreatorUpdateMixin, IsTaskCreatorDeleteMixin
 from .forms import TaskCreateForm, TaskCompleteForm
 from .models import Task
@@ -24,7 +25,6 @@ class ToDoTaskCreateView(LoginRequiredMixin, CreateView, IsTaskCreatorUpdateMixi
     login_url = "/auth/login"
 
     def form_valid(self, form):
-        self.form = form
         task = form.save(commit=False)
         user = self.request.user
 
@@ -42,7 +42,8 @@ class ToDoListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         user = self.request.user
-        task_list = Task.objects.filter(owner=user)
+        task_list = Task.objects.filter(owner=user).filter(is_completed=False)
+        logger.info(task_list)
         return task_list
 
 
@@ -59,14 +60,27 @@ class TaskDeleteView(IsTaskCreatorDeleteMixin, DeleteView):
     success_url = reverse_lazy("todo:todo-tasks")
 
 
-class ToDoTaskCompleteView(LoginRequiredMixin,FormView):
+class ToDoTaskCompleteView(LoginRequiredMixin, FormView):
     template_name = "todos/todo-task-complete-confirm.html"
     form_class = TaskCompleteForm
     success_url = reverse_lazy("todo:todo-tasks")
 
-    def post(self, request, *args, **kwargs):
-        logger.info(f"Post from {self.__class__.__name__},{request},{args},{kwargs}")
-        return super(ToDoTaskCompleteView,self).post(request, *args, **kwargs)
+    def form_valid(self, form):
+        logger.info("---- ToDoTaskCompleteView -----")
+        task_id = self.kwargs['pk']
+        task = get_object_or_404(Task, pk=task_id)
+
+        # Set the 'is_completed' field to True based on the checkbox
+        task.is_completed = form.cleaned_data['confirm_completion']
+        task.save()
+        return super(ToDoTaskCompleteView, self).form_valid(form)
+
+    def get(self, request, *args, **kwargs):
+        task_id = self.kwargs['pk']
+        task = get_object_or_404(Task, pk=task_id)
+        form = self.form_class(initial={'is_completed': task.is_completed})
+        return self.render_to_response(self.get_context_data(form=form, task=task))
+
 
 class TaskCompleteView(LoginRequiredMixin, ListView):
     model = Task
@@ -75,7 +89,7 @@ class TaskCompleteView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         user = self.request.user
-        task_list = Task.objects.all().filter(is_completed=False, owner=user)
+        task_list = Task.objects.all().filter(is_completed=True, owner=user)
         return task_list
 
 

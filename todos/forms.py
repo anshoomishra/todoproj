@@ -44,7 +44,13 @@ class TaskCreateForm(ModelForm):
             )
         return cleaned_data
 
-class TaskCompleteForm(ModelForm):
-    class Meta:
-        model = Task
-        fields = ['is_completed']
+class TaskCompleteForm(forms.Form):
+    confirm_completion = forms.BooleanField(
+        required=True,
+        label='Confirm task completion',
+        help_text='Check this box to confirm that you have completed the task.',
+    )
+    def __init__(self, *args, **kwargs):
+        initial = kwargs.pop('initial', {})
+        super().__init__(*args, **kwargs)
+        self.fields['confirm_completion'].initial = initial.get('is_completed', False)

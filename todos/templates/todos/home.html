@@ -3,25 +3,31 @@
 
 {% block content %}
 
-    <div class="container">
-        {% if user.is_authenticated %}
-            Welcome {{user}}
-        {% endif %}
-        <div class="row p-3">
-      <div class="col-md-12">
-        <h1 class="mb-5">
-          Welcome,
-        </h1>
-        <h3 class="mb-5">
-          Here you can manage yourself
-        </h3>
-          <p class="text-body-tertiary">
-            Welcome to TODO , the ultimate tool to conquer your tasks and boost your productivity. Simplify your life with our intuitive and powerful todo app. Whether you're a busy professional, a student juggling assignments, or simply looking to stay organized, TODO app is here to help you turn your to-dos into to-dones!
-          </p>
+<div class="container shadow-sm">
+
+    <div class="row p-3 justify-content-center mt-5">
+        <div class="col-md-8">
+            <h1 class="mb-5">
+                {% if user.is_authenticated %}
+                  Hi,  {{user}}
+                {% endif %}
+            </h1>
+            <h5 class="mb-5">
+                Welcome,
+            </h5>
+            <h3 class="mb-5">
+                Here you can manage yourself
+            </h3>
+            <p class="text-body-tertiary">
+                Welcome to TODO , the ultimate tool to conquer your tasks and boost your productivity. Simplify your
+                life with our intuitive and powerful todo app. Whether you're a busy professional, a student juggling
+                assignments, or simply looking to stay organized, TODO app is here to help you turn your to-dos into
+                to-dones!
+            </p>
 
 
-      </div>
+        </div>
     </div>
-    </div>
+</div>
 
 {% endblock %}

@@ -10,6 +10,7 @@
       <th scope="col">#</th>
       <th scope="col">Title</th>
       <th scope="col">Priority</th>
+      <th scope="col">Task To Be Completed</th>
       <th scope="col">Action</th>
     </tr>
   </thead>
@@ -20,6 +21,7 @@
       <th scope="row">{{forloop.counter}}</th>
       <td><a href="{% url 'todo:task-detail' task.id %}">{{task.title}}</a> </td>
       <td>{{task.priority}}</td>
+      <td>{{task.due_date | date:"D d M Y"}}</td>
       <td> <a href="{% url 'todo:delete' task.id %}" class="btn btn-danger">Delete</a></td>
     </tr>
   {% endfor %}

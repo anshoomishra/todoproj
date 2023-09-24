@@ -1,42 +1,46 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand" href="#">ToDo</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul class="navbar-nav ms-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home</span></a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" type="button" id="taskMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          task
-        </a>
-        <div class="dropdown-menu" aria-labelledby="taskMenu">
-            <a class="dropdown-item" href="{% url 'todo:todo-tasks' %}">todo</a>
-            <a class="dropdown-item" href="{% url 'todo:todo-tasks-completed' %}">completed</a>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">deleted</a>
-      </li>
-      {% if user.is_authenticated %}
-        <li class="nav-item">
-        <a class="nav-link" href="#">{{user}}</a>
-      </li>
-      {% endif %}
-      <li class="nav-item dropdown">
-        <a class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          account
-        </a>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="#">profile</a>
-          <a class="dropdown-item btn {% if not user.is_authenticated %} disabled {% endif %}"  href="{% url 'account:logout' %}">logout</a>
-        </div>
-      </li>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'todo:home' %}">Home</span></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" type="button" id="taskMenu" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        Task
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="taskMenu">
+                        <a class="dropdown-item" href="{% url 'todo:todo-tasks' %}">To Do</a>
+                        <a class="dropdown-item" href="{% url 'todo:todo-tasks-completed' %}">Completed</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">deleted</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="#">{{user}}</a>
+                </li>
+                {% endif %}
+                <li class="nav-item dropdown">
+                    <a class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        account
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">profile</a>
+                        <a class="dropdown-item btn {% if not user.is_authenticated %} disabled {% endif %}"
+                           href="{% url 'account:logout' %}">logout</a>
+                    </div>
+                </li>
 
-    </ul>
+            </ul>
         </div>
     </div>
 

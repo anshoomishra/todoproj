@@ -3,13 +3,20 @@
 {% block content %}
 
   <div class="container mt-4">
-    <div class="card" style="width: 18rem;">
-      <div class="card-body">
-        <h5 class="card-title">{{object}} Due Date</h5>
-        <p class="card-text">This task is created on {{ object.created_at | date:"D d M Y" }}</p>
-        <p class="card-text">This task is has due date on {{object.due_date | date:"D d M Y" }}</p>
-        <a href="{% url 'todo:todo-task-complete' object.id %}" class="btn btn-primary rounded-0">complete</a>
+    <h5 class="">{{object}} Due Date - {{object.due_date | date:"D d M Y" }} </h5>
+    <hr class="danger">
+    <div class="row">
+      <div class="col-md-6">
+         <p class="card-text">This task is created on {{ object.created_at | date:"D d M Y" }}</p>
       </div>
+      <div class="col-md-6">
+        <p class="card-text">This task is has due date on {{object.due_date | date:"D d M Y" }}</p>
+
+      </div>
+      <hr>
+      <p> {{object.description}} </p>
+      <hr>
+      <a href="{% url 'todo:todo-task-complete' object.id %}" class="btn btn-primary rounded-0">complete</a>
     </div>
   </div>
 

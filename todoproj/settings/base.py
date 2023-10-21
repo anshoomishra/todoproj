@@ -15,7 +15,7 @@ from dotenv import load_dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 ENV_FILE = BASE_DIR / '.env'
-
+CERT = BASE_DIR / 'cacert-2023-08-22.pem'
 load_dotenv(ENV_FILE)
 
 # Quick-start development settings - unsuitable for production
@@ -159,3 +159,7 @@ LOGGING = {
         'level': 'DEBUG',
     },
 }
+
+# from django.core.mail import send_mail
+
+# send_mail("Test Subject","Test Message","anshum45@gmail.com",["anshoomihsra.in@gmailc.com"])

@@ -3,7 +3,7 @@ from .base import *
 DEBUG = True
 
 ALLOWED_HOSTS = ['0.0.0.0','localhost']
-
+# ALLOWED_HOSTS = ["*"]
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -43,3 +43,11 @@ DEFAULT_FROM_EMAIL = 'anshum45@gmail.com'
 # from django.core.mail import send_mail
 
 # send_mail("Test Subject","Test Message","anshum45@gmail.com",["anshoomihsra.in@gmailc.com"])
+
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+print(STATICFILES_DIRS)
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

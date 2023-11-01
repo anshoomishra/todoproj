@@ -51,7 +51,6 @@ class TaskManager(models.Manager):
     def all_inactive(self):
         return self.get_queryset().get_inactive()
 
-
 class Task(models.Model):
     title = models.CharField(max_length=200)
     active = models.BooleanField(default=True)

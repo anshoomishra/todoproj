@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404,render
 from django.views.generic import TemplateView, DetailView, FormView
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView, View
 from .permissions import IsTaskCreatorUpdateMixin, IsTaskCreatorDeleteMixin
@@ -7,6 +7,7 @@ from .models import Task
 from django.forms import ValidationError
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
+
 import logging
 
 # Create your views here.
@@ -45,6 +46,14 @@ class ToDoListView(LoginRequiredMixin, ListView):
         task_list = Task.objects.filter(owner=user).filter(is_completed=False)
         logger.info(task_list)
         return task_list
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = {}
+        user = self.request.user
+        completed_task = Task.objects.filter(owner=user).filter(is_completed=True).count()
+        tobe_done_task = Task.objects.filter(owner=user).filter(is_completed=True).count()
+        context['completed_task'] = completed_task
+        context['tobe_done_task'] = tobe_done_task
+        return super().get_context_data(**context)
 
 
 class ToDoTaskUpdateView(IsTaskCreatorUpdateMixin, UpdateView):
@@ -98,3 +107,9 @@ class TaskDetailView(LoginRequiredMixin, DetailView):
     template_name = "todos/task-details.html"
     login_url = "/auth/login/"
     pk_url_kwarg = 'pk'
+
+
+def error_404_view(request, exception):
+    # we add the path to the 404.html file
+    # here. The name of our HTML file is 404.html
+    return render(request, '404.html')

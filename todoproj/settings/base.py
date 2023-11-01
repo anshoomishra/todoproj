@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'account',
     'phonenumber_field',
-    'todos'
+    'todos',
+    'rest_framework',
+    'api'
 ]
 
 MIDDLEWARE = [
@@ -113,7 +115,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -159,7 +161,6 @@ LOGGING = {
         'level': 'DEBUG',
     },
 }
-
 # from django.core.mail import send_mail
 
 # send_mail("Test Subject","Test Message","anshum45@gmail.com",["anshoomihsra.in@gmailc.com"])

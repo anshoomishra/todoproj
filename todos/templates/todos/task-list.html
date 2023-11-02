@@ -39,43 +39,67 @@
             </div>
         </div>
         <div class="col-md-8">
-            <div class="">
-
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Priority</th>
-                        <th scope="col">Task To Be Completed</th>
-
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for task in task_list %}
-                    {% if not task.due_date|task_expired %}
-                    <tr class="">
-
-                        <th scope="row">{{forloop.counter}}</th>
-
-                        <td><a href="{% url 'todo:task-detail' task.id %}">{{task.title}}</a></td>
-
-                        <td>{{task.priority}}</td>
-                        <td>{{task.due_date | date:"D d M Y"}} {% if task.due_date|task_expired %}
-                            <span class="badge bg-danger">Expired</span>
-                            {% else %}
-                            <div class="spinner-grow text-success" style="width: 1rem; height: 1rem;" role="status">
-                                <span class="visually-hidden">Loading...</span>
+            <div class="row d-flex justify-content-center container">
+                <div class="col-md-12">
+                    <div class="card-hover-shadow-2x mb-3 card">
+                        <div class="card-header-tab card-header">
+                            <div class="card-header-title font-size-lg text-capitalize font-weight-normal"><i
+                                    class="fa fa-tasks"></i>&nbsp;Task Lists
                             </div>
-                            {% endif %}
-                        </td>
 
-                        <!--      <td> <a href="{% url 'todo:delete' task.id %}" class="btn btn-danger">Delete</a></td>-->
-                    </tr>
-                    {% endif %}
-                    {% endfor %}
-                    </tbody>
-                </table>
+                        </div>
+                        <div class="scroll-area-sm">
+                            <perfect-scrollbar class="ps-show-limits">
+                                <div style="position: static;" class="ps ps--active-y">
+                                    <div class="ps-content">
+                                        <ul class=" list-group list-group-flush">
+                                            {% for task in task_list %}
+                                            <li class="list-group-item">
+                                                <div class="todo-indicator bg-warning"></div>
+                                                <div class="widget-content p-0">
+                                                    <div class="widget-content-wrapper">
+                                                        <div class="widget-content-left me-2">
+                                                            <div class="custom-checkbox custom-control">
+                                                                <input class="custom-control-input"
+                                                                       id="exampleCustomCheckbox12"
+                                                                       type="checkbox"><label
+                                                                    class="custom-control-label"
+                                                                    for="exampleCustomCheckbox12">&nbsp;</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="widget-content-left">
+                                                            <div class="widget-heading">{{task.title}}
+                                                                <div class="badge bg-danger ms-2">Rejected</div>
+                                                            </div>
+                                                            <div class="widget-subheading">
+                                                                <i>{{task.owner.first_name}}</i></div>
+                                                        </div>
+                                                        <div class="widget-content-right">
+                                                            <button class="border-0 btn-transition btn btn-outline-success">
+                                                                <i class="fa fa-check"></i></button>
+                                                            <button class="border-0 btn-transition btn btn-outline-danger">
+                                                                <i class="fa fa-trash"></i>
+
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </perfect-scrollbar>
+                        </div>
+                        <div class="d-block text-right card-footer">
+                            <button class="mr-2 btn btn-link btn-sm">Cancel</button>
+                            <button
+                                    class="btn btn-primary">Add Task
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
